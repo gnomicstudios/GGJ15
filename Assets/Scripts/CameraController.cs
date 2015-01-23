@@ -16,25 +16,27 @@ public class CameraController : MonoBehaviour {
 	
 	}
 
-	void FixedUpdate () {
-
-        var isMouseButtonDown = Input.GetMouseButton(0);
-
-		if (isMouseButtonDown) {
-			if (lastIsMouseButtonDown) {
-				if (lastMouseButtonDownPos != Input.mousePosition)
-				{
-					IsPanning = true;
-					OnDragged(lastMouseButtonDownPos, Input.mousePosition);
-				}
+	void FixedUpdate ()
+	{
+		if (Input.GetMouseButton(0))
+		{
+			// Start panning if dragged a small distance
+			if (!IsPanning && Vector3.Distance(lastMouseButtonDownPos, Input.mousePosition) > 2.0f)
+			{
+				IsPanning = true;
 			}
-			lastMouseButtonDownPos = Input.mousePosition;
         }
 		else
 		{
 			IsPanning = false;
 		}
-		lastIsMouseButtonDown = isMouseButtonDown;
+
+		if (IsPanning && lastMouseButtonDownPos != Input.mousePosition)
+		{
+			OnDragged(lastMouseButtonDownPos, Input.mousePosition);
+		}
+		
+		lastMouseButtonDownPos = Input.mousePosition;
 	}
 
     void OnDragged(Vector2 from, Vector2 to) {

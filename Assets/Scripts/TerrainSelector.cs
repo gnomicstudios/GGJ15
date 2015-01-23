@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TerrainSelector : MonoBehaviour, ISelectableEntity
+public class TerrainSelector : MonoBehaviour
 {
-	public GameObject terrainSelectIndicator;
-
 	private CameraController camController;
 	private bool wasCamDragging = false;
+
+	public GameObject terrainSelectIndicator;
+
 
 	// Use this for initialization
 	void Start()
@@ -20,6 +21,15 @@ public class TerrainSelector : MonoBehaviour, ISelectableEntity
 		wasCamDragging |= camController.IsPanning;
 	}
 
+	void SetTargetPosition(Vector3 targetPos)
+	{
+		if (terrainSelectIndicator != null)
+			terrainSelectIndicator.transform.position = targetPos;
+
+		if (SelectionManager.Instance.CurrentSelectable != null)
+			SelectionManager.Instance.CurrentSelectable.SetTarget(terrainSelectIndicator.transform);
+	}
+
 	void OnMouseDown()
 	{
 		wasCamDragging = false;
@@ -28,26 +38,12 @@ public class TerrainSelector : MonoBehaviour, ISelectableEntity
 	{
 		if (!wasCamDragging)
 		{
-			SelectionManager.Instance.CurrentSelectable = this;
+			var ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+			RaycastHit hit;
+			if (Physics.Raycast(ray, out hit))
+			{
+				SetTargetPosition(hit.point);
+			}
 		}
 	}
-
-	#region ISelectableEntity implementation
-
-	public void OnSelect ()
-	{
-		var ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit))
-		{
-			if (terrainSelectIndicator != null)
-				terrainSelectIndicator.transform.position = hit.point;
-		}
-	}
-
-	public void OnDeselect ()
-	{
-	}
-
-	#endregion
 }
