@@ -1,8 +1,11 @@
 
+using UnityEngine;
+
 public interface ISelectableEntity
 {
 	void OnSelect();
 	void OnDeselect();
+	void SetTarget(Transform transform);
 }
 
 public class SelectionManager
