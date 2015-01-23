@@ -3,10 +3,13 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour {
 
-	const float CameraHeight = 10.0f;
+	[HideInInspector]
+	public bool IsPanning;
+
+	public float CameraHeight = 5.0f;
 
     bool lastIsMouseButtonDown;
-    Vector2 lastMouseButtonDownPos;
+    Vector3 lastMouseButtonDownPos;
 
 	void Start () {
 	
@@ -18,10 +21,18 @@ public class CameraController : MonoBehaviour {
 
 		if (isMouseButtonDown) {
 			if (lastIsMouseButtonDown) {
-				OnDragged(lastMouseButtonDownPos, Input.mousePosition);
+				if (lastMouseButtonDownPos != Input.mousePosition)
+				{
+					IsPanning = true;
+					OnDragged(lastMouseButtonDownPos, Input.mousePosition);
+				}
 			}
 			lastMouseButtonDownPos = Input.mousePosition;
         }
+		else
+		{
+			IsPanning = false;
+		}
 		lastIsMouseButtonDown = isMouseButtonDown;
 	}
 

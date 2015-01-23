@@ -5,21 +5,31 @@ public class TerrainSelector : MonoBehaviour, ISelectableEntity
 {
 	public GameObject terrainSelectIndicator;
 
+	private CameraController camController;
+	private bool wasCamDragging = false;
+
 	// Use this for initialization
 	void Start()
 	{
-	
+		camController = GameObject.FindObjectOfType<CameraController>();
 	}
 	
 	// Update is called once per frame
 	void Update()
 	{
-	
+		wasCamDragging |= camController.IsPanning;
 	}
 
 	void OnMouseDown()
 	{
-		SelectionManager.Instance.CurrentSelectable = this;
+		wasCamDragging = false;
+	}
+	void OnMouseUpAsButton()
+	{
+		if (!wasCamDragging)
+		{
+			SelectionManager.Instance.CurrentSelectable = this;
+		}
 	}
 
 	#region ISelectableEntity implementation
