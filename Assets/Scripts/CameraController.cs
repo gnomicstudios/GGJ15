@@ -13,8 +13,8 @@ public class CameraController : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-        
-        var isMouseButtonDown = Input.GetMouseButtonDown(0);
+
+        var isMouseButtonDown = Input.GetMouseButton(0);
 
 		if (isMouseButtonDown) {
 			if (lastIsMouseButtonDown) {
@@ -27,10 +27,7 @@ public class CameraController : MonoBehaviour {
 
     void OnDragged(Vector2 from, Vector2 to) {
 
-		if (from == to)
-			return;
-
-        var delta = (to - from) * Settings.Instance.CameraPanSensitvity;
+        var delta = (to - from) * Settings.Instance.CameraPanSensitvity * -1.0f;
         var pos = camera.transform.position;
 
 		camera.transform.position = new Vector3(pos.x + delta.x, CameraHeight, pos.z + delta.y);
