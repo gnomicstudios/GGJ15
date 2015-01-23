@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour {
 	public bool IsPanning;
 
 	public float CameraHeight = 5.0f;
+	public float CameraPanSensitvity = 1.0f;
 
     bool lastIsMouseButtonDown;
     Vector3 lastMouseButtonDownPos;
@@ -38,7 +39,7 @@ public class CameraController : MonoBehaviour {
 
     void OnDragged(Vector2 from, Vector2 to) {
 
-        var delta = (to - from) * Settings.Instance.CameraPanSensitvity * -1.0f;
+        var delta = (to - from) * CameraPanSensitvity * -1.0f;
         var pos = camera.transform.position;
 
 		camera.transform.position = new Vector3(pos.x + delta.x, CameraHeight, pos.z + delta.y);
