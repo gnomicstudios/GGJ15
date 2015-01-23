@@ -5,5 +5,10 @@
     void FixedUpdate()
     {
         currentHealth -= HealthDropRate;
+        if(currentHealth <= 0)
+        {
+            currentHealth = 0;
+            //DIE DIE DIE
+        }
     }
 }
