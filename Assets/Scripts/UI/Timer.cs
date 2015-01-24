@@ -4,10 +4,14 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     public float TimeCounter = 0f;
+    public bool running = true;
     
     void FixedUpdate()
     {
-        TimeCounter += Time.fixedDeltaTime;
-        gameObject.GetComponent<Text>().text = TimeCounter.ToString("F2");
+        if(running)
+        {
+            TimeCounter += Time.fixedDeltaTime;
+            gameObject.GetComponent<Text>().text = TimeCounter.ToString("F2");
+        }
     }
 }

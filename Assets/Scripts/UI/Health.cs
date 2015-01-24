@@ -14,8 +14,6 @@ public class Health : MonoBehaviour
     {
         HealthPlayer health = FindObjectOfType<HealthPlayer>();
 
-        Debug.Log((float)health.currentHealth / health.maxHealth);
-
         rectTransform.sizeDelta = new Vector2(health.currentHealth * size / health.maxHealth, rectTransform.sizeDelta.y);
     }
 }

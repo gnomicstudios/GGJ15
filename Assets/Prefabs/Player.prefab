@@ -246,7 +246,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
@@ -288,6 +288,7 @@ MonoBehaviour:
   maxHealth: 1000
   currentHealth: 0
   HealthDropRate: 1
+  DeathUI: {fileID: 0}
 --- !u!114 &11491176
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -300,6 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 3
+  isAlive: 1
 --- !u!135 &13529332
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -323,7 +325,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: .5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: .600000024, z: 0}
 --- !u!212 &21291174
 SpriteRenderer:
   m_ObjectHideFlags: 1
