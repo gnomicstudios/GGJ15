@@ -4,6 +4,6 @@ public class UIManager : MonoBehaviour
 {    
     public void StartGame()
     {
-        Application.LoadLevel("BobTest");
+        Application.LoadLevel(Application.loadedLevel);
     }
 }

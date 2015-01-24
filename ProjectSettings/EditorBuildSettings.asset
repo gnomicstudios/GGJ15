@@ -9,3 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
   - enabled: 1
     path: Assets/Scenes/BobTest.unity
+  - enabled: 1
+    path: Assets/Scenes/MarkTest.unity
+  - enabled: 1
+    path: Assets/Scenes/aranda.unity
