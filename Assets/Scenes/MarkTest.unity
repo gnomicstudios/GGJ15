@@ -118,6 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f296845382a025439e3a02af82f794c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
 --- !u!54 &4793150
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -598,7 +599,7 @@ GameObject:
   - 4: {fileID: 261472763}
   - 114: {fileID: 261472762}
   m_Layer: 0
-  m_Name: EnemyManager
+  m_Name: EnemyPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -615,7 +616,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62cc639c3364fe946ac9a9b200f74827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initalNumberOfEnemies: 0
+  enemySpawnRadius: 0
+  numberOfEnemiesInRadius: 0
   enemyTemplate: {fileID: 0}
 --- !u!4 &261472763
 Transform:
