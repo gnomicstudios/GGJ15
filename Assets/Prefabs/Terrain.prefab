@@ -37,6 +37,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &155048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 455048}
+  - 114: {fileID: 11455048}
+  m_Layer: 0
+  m_Name: Resources
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &411960
 Transform:
   m_ObjectHideFlags: 1
@@ -60,8 +76,21 @@ Transform:
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children:
   - {fileID: 411960}
+  - {fileID: 455048}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &455048
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155048}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 411962}
+  m_RootOrder: 1
 --- !u!23 &2311960
 Renderer:
   m_ObjectHideFlags: 1
@@ -141,6 +170,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrainSelectIndicator: {fileID: 111960}
+--- !u!114 &11455048
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adae6f1d6ede89e42adeda0d63e0c1bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minCount: 25
+  maxCount: 50
+  angle: 75
+  minDist: 25
+  maxDist: 35
+  Resources:
+  - {fileID: 412636, guid: f27f1483fd01fbb4a84308659929af94, type: 2}
+  count: 0
 --- !u!135 &13511962
 SphereCollider:
   m_ObjectHideFlags: 1
