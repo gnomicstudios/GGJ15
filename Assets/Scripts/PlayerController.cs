@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
     public void OnHealthDepleted()
     {
         isAlive = false;
+        target = null;
         rigidbody.velocity = Vector3.zero;
     }
 
