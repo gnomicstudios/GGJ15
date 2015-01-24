@@ -613,12 +613,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 261472761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62cc639c3364fe946ac9a9b200f74827, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b187c8c7e2c335418dc3871966f264f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySpawnRadius: 0
-  numberOfEnemiesInRadius: 0
-  enemyTemplate: {fileID: 0}
+  enemySpawnRadius: 20
+  minEnemySpawnRadius: 5
+  numberOfEnemiesInRadius: 10
+  enemyTemplate: {fileID: 11440952, guid: 155b9dc5a6738094fb640e438451f2d4, type: 2}
 --- !u!4 &261472763
 Transform:
   m_ObjectHideFlags: 0
