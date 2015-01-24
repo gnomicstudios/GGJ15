@@ -2,33 +2,60 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class EnemyManagerBehaviour : MonoBehaviour {
+public class EnemyPoolBehaviour : MonoBehaviour {
 
-    public int initalNumberOfEnemies;
+    public float enemySpawnRadius;
+    public float minEnemySpawnRadius;
+    public int numberOfEnemiesInRadius;
     public EnemyController enemyTemplate;
 
     List<EnemyController> enemies;
+    PlayerController[] players;
+    Random rand;
     
-
 	// Use this for initialization
 	void Start () 
     {
         enemies = new List<EnemyController>();
-        for (var i = 0; i < initalNumberOfEnemies; i++)
-        {
-            var enemy = CreateEnemy();
-            enemies.Add(enemy);
-        }
+        players = GameObject.FindObjectsOfType<PlayerController>();
 	}
 
     // Update is called once per frame
     void Update()
     {
+        // for each player check there are enough enemies near by else spawn one
+        foreach(var player in players)
+        {
+            // TODO check player is alive
 
+            var num = 0;
+            foreach (var enemy in enemies)
+            {
+                var dist = Vector3.Distance(player.transform.position, enemy.transform.position);
+                if (dist < enemySpawnRadius)
+                {
+                    num++;
+                }
+            }
+
+            if (num < numberOfEnemiesInRadius)
+            {
+                var enemy = CreateEnemy(player.transform);
+                enemies.Add(enemy);
+            }
+        }
 	}
 
-    EnemyController CreateEnemy()   
+    EnemyController CreateEnemy(Transform centre)   
     {
-        return (EnemyController)GameObject.Instantiate(enemyTemplate);
+        var enemy = (EnemyController)GameObject.Instantiate(enemyTemplate);
+        enemy.transform.parent = gameObject.transform;
+
+        var delta = Random.insideUnitSphere * enemySpawnRadius;
+        
+        delta.y = 0.0f;
+        enemy.transform.position = centre.transform.position + delta;
+
+        return enemy;
     }
 }
