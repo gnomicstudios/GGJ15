@@ -3,11 +3,41 @@ using System.Collections;
 
 public class MovementBehaviour : MonoBehaviour {
 
-	public Transform sourceTransform;
+    public Transform sourceTransform;
 
-	Transform target;
-	float walkSpeed = 2.5f;
+    Transform target;
+    float walkSpeed = 2.5f;
+    RepelState repelState;
 
+    public class RepelState
+    {
+        public const float RepelDuration = 2.0f;
+
+        public bool isActive;
+        public Vector3 repelDirection;
+        public float timeRemaining;
+
+        public RepelState(Vector3 direction)
+        {
+            isActive = true;
+            repelDirection = direction;
+            timeRemaining = RepelDuration;
+        }
+
+        public void Update(float dt)
+        {
+            timeRemaining -= dt;
+            isActive = timeRemaining > 0.0f;
+        }
+    }
+
+    public void Repell(Vector3 fromPos)
+    {
+        var diff = transform.position - fromPos;
+        diff.Normalize();
+        repelState = new RepelState(diff);
+        target = null;
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +46,21 @@ public class MovementBehaviour : MonoBehaviour {
 	
 	void FixedUpdate () 
 	{
+        if (repelState != null)
+        {
+            repelState.Update(Time.deltaTime);
+            if (repelState.isActive)
+            {
+                sourceTransform.rigidbody.velocity = repelState.repelDirection * walkSpeed;
+            }
+            else
+            {
+                sourceTransform.rigidbody.velocity = Vector3.zero;
+                repelState = null;
+            }
+            return;
+        }
+
         if (target != null)
         {
             Vector3 diff = target.position - this.transform.position;

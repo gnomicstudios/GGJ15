@@ -16,7 +16,8 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
 
     // Use this for initialization
     void Start()
-    {
+    {		
+	    SelectionManager.Instance.CurrentSelectable = this;
     }
 	
     // Update is called once per frame
@@ -25,8 +26,9 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
         if (target != null)
         {
             Vector3 diff = target.position - this.transform.position;
-            if (diff.sqrMagnitude < 0.1f)
-            {
+			if (diff.sqrMagnitude < 0.001f)
+			{
+				target.GetComponent<MeshRenderer>().enabled = false;
                 target = null;
                 transform.rigidbody.velocity = Vector3.zero;
             }
