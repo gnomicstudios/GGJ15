@@ -26,7 +26,8 @@ public class EnemyPoolBehaviour : MonoBehaviour {
         // for each player check there are enough enemies near by else spawn one
         foreach(var player in players)
         {
-            // TODO check player is alive
+            if (!player.active)
+                continue;
 
             var num = 0;
             foreach (var enemy in enemies)
@@ -51,7 +52,7 @@ public class EnemyPoolBehaviour : MonoBehaviour {
         var enemy = (EnemyController)GameObject.Instantiate(enemyTemplate);
         enemy.transform.parent = gameObject.transform;
 
-        var delta = Random.insideUnitSphere * enemySpawnRadius;
+        var delta = Random.insideUnitSphere * (enemySpawnRadius + minEnemySpawnRadius);
         
         delta.y = 0.0f;
         enemy.transform.position = centre.transform.position + delta;

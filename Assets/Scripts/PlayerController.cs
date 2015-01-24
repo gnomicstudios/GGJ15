@@ -6,7 +6,13 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
     private Transform target;
 
     public float walkSpeed = 3.0f;
-    public bool active = true;
+    public bool isAlive = true;
+
+    public void OnHealthDepleted()
+    {
+        isAlive = false;
+        rigidbody.velocity = Vector3.zero;
+    }
 
     // Use this for initialization
     void Start()
@@ -16,24 +22,25 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(active && target != null)
+        if (target != null)
         {
             Vector3 diff = target.position - this.transform.position;
-            if(diff.sqrMagnitude < 0.1f)
+            if (diff.sqrMagnitude < 0.1f)
             {
                 target = null;
+                transform.rigidbody.velocity = Vector3.zero;
             }
             else
             {
                 diff.Normalize();
-                transform.position += diff * walkSpeed * Time.deltaTime;
+                transform.rigidbody.velocity = diff * walkSpeed;
             }
         }
     }
 
     void OnMouseDown()
     {
-        if(active)
+        if(isAlive)
         {
             SelectionManager.Instance.CurrentSelectable = this;
         }
@@ -53,7 +60,10 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
 
     public void SetTarget(Transform targetTransform)
     {
-        target = targetTransform;
+        if (isAlive)
+        {
+            target = targetTransform;
+        }
     }
 
 	#endregion

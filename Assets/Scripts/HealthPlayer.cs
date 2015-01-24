@@ -12,7 +12,7 @@ public class HealthPlayer : IHealth
         {
             currentHealth = 0;
             //DIE DIE DIE
-            gameObject.GetComponent<PlayerController>().active = false;
+            gameObject.GetComponent<PlayerController>().OnHealthDepleted();
             FindObjectOfType<Timer>().running = false;
             DeathUI.SetActive(true);
         }

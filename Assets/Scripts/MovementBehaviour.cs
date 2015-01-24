@@ -16,19 +16,20 @@ public class MovementBehaviour : MonoBehaviour {
 	
 	void FixedUpdate () 
 	{
-		if (target != null)
-		{
-			Vector3 diff = target.position - this.transform.position;
-			if (diff.sqrMagnitude < 0.1f)
-			{
-				// TODO Attack!
-			}
-			else
-			{
-				diff.Normalize();
-				sourceTransform.position += diff * walkSpeed * Time.deltaTime;
-			}
-		}	
+        if (target != null)
+        {
+            Vector3 diff = target.position - this.transform.position;
+            if (diff.sqrMagnitude < 0.1f)
+            {
+                // TODO Attack!
+                sourceTransform.rigidbody.velocity = Vector3.zero;
+            }
+            else
+            {
+                diff.Normalize();
+                sourceTransform.rigidbody.velocity = diff * walkSpeed;
+            }
+        }
 	}
 
 	void OnTriggerEnter(Collider other)
