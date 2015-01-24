@@ -6,7 +6,6 @@ public class CameraController : MonoBehaviour {
 	[HideInInspector]
 	public bool IsPanning;
 
-	public float CameraHeight = 5.0f;
 	public float CameraPanSensitvity = 1.0f;
 
     bool lastIsMouseButtonDown;
@@ -21,7 +20,7 @@ public class CameraController : MonoBehaviour {
 		if (Input.GetMouseButton(0))
 		{
 			// Start panning if dragged a small distance
-			if (!IsPanning && Vector3.Distance(lastMouseButtonDownPos, Input.mousePosition) > 2.0f)
+			if (!IsPanning && Vector3.Distance(lastMouseButtonDownPos, Input.mousePosition) > 4.0f)
 			{
 				IsPanning = true;
 			}
@@ -44,7 +43,7 @@ public class CameraController : MonoBehaviour {
         var delta = (to - from) * CameraPanSensitvity * -1.0f;
         var pos = camera.transform.position;
 
-		camera.transform.position = new Vector3(pos.x + delta.x, CameraHeight, pos.z + delta.y);
+		camera.transform.position = new Vector3(pos.x + delta.x, pos.y, pos.z + delta.y);
     }
 
 }
