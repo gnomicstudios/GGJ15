@@ -1,21 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CreateResources : MonoBehaviour
+public class Resources : MonoBehaviour
 {
     public int minCount = 10;
     public int maxCount = 20;
     public float angle = 10f;
     public int minDist = 25;
     public int maxDist = 35;
-    public Transform[] Resources;
+    public Transform[] prefab;
     public int count;
     private int currentCount;
 
     // Use this for initialization
     void Start()
     {
-        if(Resources.Length == 0)
+        if(prefab.Length == 0)
         {
             return;
         }
@@ -37,7 +37,7 @@ public class CreateResources : MonoBehaviour
         }
 
         currentCount++;
-        Transform t = (Transform)Instantiate(Resources[Random.Range(0, Resources.Length - 1)],
+        Transform t = (Transform)Instantiate(prefab[Random.Range(0, prefab.Length - 1)],
                                                         pos,
                                                         Quaternion.identity);
         t.gameObject.transform.parent = gameObject.transform;

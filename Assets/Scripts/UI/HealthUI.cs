@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Health : MonoBehaviour
+public class HealthUI : MonoBehaviour
 {
     RectTransform rectTransform;
     float size;
@@ -12,7 +12,8 @@ public class Health : MonoBehaviour
 
     void FixedUpdate()
     {
-        HealthPlayer health = FindObjectOfType<HealthPlayer>();
+        Players players = FindObjectOfType<Players>();
+        Health health = players.activePlayers[0].GetComponentInChildren<Health>();
 
         rectTransform.sizeDelta = new Vector2(health.currentHealth * size / health.maxHealth, rectTransform.sizeDelta.y);
     }

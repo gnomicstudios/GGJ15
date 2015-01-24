@@ -11,11 +11,12 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
 
     private Animator anim;                  // Reference to the player's animator component.
 
-    public void OnHealthDepleted()
+    public void Kill()
     {
         isAlive = false;
         target = null;
         rigidbody.velocity = Vector3.zero;
+        transform.rigidbody.isKinematic = true;
     }
 
     // Use this for initialization
