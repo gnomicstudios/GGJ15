@@ -6,7 +6,10 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
     private Transform target;
 
     public float walkSpeed = 3.0f;
+    public bool facingRight = true;
     public bool isAlive = true;
+
+    private Animator anim;                  // Reference to the player's animator component.
 
     public void OnHealthDepleted()
     {
@@ -17,18 +20,19 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
     // Use this for initialization
     void Start()
     {		
-	    SelectionManager.Instance.CurrentSelectable = this;
+        anim = GetComponent<Animator>();
+        SelectionManager.Instance.CurrentSelectable = this;
     }
 	
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (target != null)
+        if(target != null)
         {
             Vector3 diff = target.position - this.transform.position;
-			if (diff.sqrMagnitude < 0.001f)
-			{
-				target.GetComponent<MeshRenderer>().enabled = false;
+            if(diff.sqrMagnitude < 0.001f)
+            {
+                target.GetComponent<MeshRenderer>().enabled = false;
                 target = null;
                 transform.rigidbody.velocity = Vector3.zero;
             }
@@ -37,6 +41,23 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
                 diff.Normalize();
                 transform.rigidbody.velocity = diff * walkSpeed;
             }
+        }
+
+        anim.SetFloat("VerticalVelocity", transform.rigidbody.velocity.z);
+        
+        float h = transform.rigidbody.velocity.x;
+        anim.SetFloat("HorizontalVelocity", System.Math.Abs(h));
+        // If the input is moving the player doesn't match direction facing
+        if(Mathf.Abs(h) > 0.01
+            && (h < 0) == facingRight)
+        {
+            // Switch the way the player is labelled as facing.
+            facingRight = !facingRight;
+            
+            // Multiply the player's x local scale by -1.
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
         }
     }
 
@@ -62,7 +83,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
 
     public void SetTarget(Transform targetTransform)
     {
-        if (isAlive)
+        if(isAlive)
         {
             target = targetTransform;
         }
