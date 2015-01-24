@@ -147,6 +147,7 @@ MonoBehaviour:
   maxHealth: 1000
   currentHealth: 0
   HealthDropRate: 1
+  DeathUI: {fileID: 0}
 --- !u!114 &11491176
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -158,6 +159,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 552249f8861c6b643903b44f6161d68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 3
+  active: 1
 --- !u!135 &13591174
 SphereCollider:
   m_ObjectHideFlags: 1
