@@ -871,7 +871,7 @@ MonoBehaviour:
   enemySpawnRadius: 20
   minUnitEnemySpawnRadius: .200000003
   numberOfEnemiesInRadius: 2
-  enemyTemplate: {fileID: 11440952, guid: 155b9dc5a6738094fb640e438451f2d4, type: 2}
+  enemyTemplate: {fileID: 11465242, guid: 1da6529395f691847b3c5e7ba0e1c077, type: 2}
 --- !u!4 &1005840421
 Transform:
   m_ObjectHideFlags: 0
