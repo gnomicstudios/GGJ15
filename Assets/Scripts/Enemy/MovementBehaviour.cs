@@ -5,7 +5,7 @@ public class MovementBehaviour : MonoBehaviour {
 
     public Transform sourceTransform;
 
-    Transform target;
+    PlayerController target;
     float walkSpeed = 2.5f;
     RepelState repelState;
 
@@ -63,10 +63,9 @@ public class MovementBehaviour : MonoBehaviour {
 
         if (target != null)
         {
-            Vector3 diff = target.position - this.transform.position;
+            Vector3 diff = target.transform.position - this.transform.position;
             if (diff.sqrMagnitude < 0.1f)
             {
-                // TODO Attack!
                 sourceTransform.rigidbody.velocity = Vector3.zero;
             }
             else
@@ -82,7 +81,7 @@ public class MovementBehaviour : MonoBehaviour {
 		var playerController = other.gameObject.GetComponent<PlayerController> ();
 		if (playerController != null && target == null) 
 		{
-			target = playerController.transform;
+			target = playerController;
 		}
 	}
 

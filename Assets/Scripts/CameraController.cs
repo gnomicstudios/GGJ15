@@ -11,8 +11,17 @@ public class CameraController : MonoBehaviour {
     bool lastIsMouseButtonDown;
     Vector3 lastMouseButtonDownPos;
 
+    public float DistanceFromPlayerX { get; private set; }
+
+    public void SetPosition(float x, float z)
+    {
+        var pos = camera.transform.position;
+        camera.transform.position = new Vector3(x, pos.y, z);
+    }
+
 	void Start () {
-	
+
+        DistanceFromPlayerX = transform.position.z;
 	}
 
 	void FixedUpdate ()
@@ -42,8 +51,7 @@ public class CameraController : MonoBehaviour {
 
         var delta = (to - from) * CameraPanSensitvity * -1.0f;
         var pos = camera.transform.position;
-
-		camera.transform.position = new Vector3(pos.x + delta.x, pos.y, pos.z + delta.y);
+        SetPosition(pos.x + delta.x, pos.z + delta.y);
     }
 
 }
