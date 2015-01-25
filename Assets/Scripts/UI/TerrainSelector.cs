@@ -8,6 +8,7 @@ public class TerrainSelector : MonoBehaviour
 
 	public GameObject terrainSelectIndicator;
 	public float terrainSelectorHeightOffset = 0.2f;
+    public bool disableNextClick = false;
 
 	// Use this for initialization
 	void Start()
@@ -37,6 +38,12 @@ public class TerrainSelector : MonoBehaviour
 	}
 	void OnMouseUpAsButton()
 	{
+        if (disableNextClick)
+        {
+            disableNextClick = false;
+            return;
+        }
+
 		if (!wasCamDragging)
 		{
 			var ray = Camera.main.ScreenPointToRay (Input.mousePosition);

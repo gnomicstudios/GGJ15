@@ -12,6 +12,7 @@ public class Resources : MonoBehaviour
     public int count;
     public float mapSize = 500.0f;
     private int currentCount;
+    public bool CanSpawnPlayers = false;
 
     // Use this for initialization
     void Start()
@@ -42,6 +43,11 @@ public class Resources : MonoBehaviour
                                                         pos,
                                                         Quaternion.identity);
         t.gameObject.transform.parent = gameObject.transform;
+        if (currentCount == 1 || !CanSpawnPlayers)
+        {
+            // Disable spawning new players on very first resource!
+            t.GetComponent<ResourceController>().hasSpawnedPlayer = true;
+        }
 
         if(currentCount >= count)
         {

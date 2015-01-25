@@ -48,6 +48,7 @@ MonoBehaviour:
   - {fileID: 412636, guid: f27f1483fd01fbb4a84308659929af94, type: 2}
   count: 0
   mapSize: 500
+  CanSpawnPlayers: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -5,6 +5,7 @@ public class CameraController : MonoBehaviour {
 
 	[HideInInspector]
 	public bool IsPanning;
+    public bool CanPan = false;
 
 	public float CameraPanSensitvity = 1.0f;
 
@@ -26,6 +27,9 @@ public class CameraController : MonoBehaviour {
 
 	void FixedUpdate ()
 	{
+        if (!CanPan)
+            return;
+
 		if (Input.GetMouseButton(0))
 		{
 			// Start panning if dragged a small distance

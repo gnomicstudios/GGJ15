@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MovementBehaviour : MonoBehaviour {
+public class MovementBehaviour : MonoBehaviour
+{
 
     public Transform sourceTransform;
+    public bool lookAtMove = true;
 
     PlayerController target;
     float walkSpeed = 2.5f;
@@ -40,19 +42,19 @@ public class MovementBehaviour : MonoBehaviour {
         target = null;
     }
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    void Start()
     {
         attackAudioSources = GetComponents<AudioSource>();
 
-	}
+    }
 	
-	void FixedUpdate () 
-	{
-        if (repelState != null)
+    void FixedUpdate()
+    {
+        if(repelState != null)
         {
             repelState.Update(Time.deltaTime);
-            if (repelState.isActive)
+            if(repelState.isActive)
             {
                 sourceTransform.rigidbody.velocity = repelState.repelDirection * walkSpeed;
             }
@@ -64,33 +66,34 @@ public class MovementBehaviour : MonoBehaviour {
             return;
         }
 
-        if (target != null)
+        if(target != null)
         {
             Vector3 diff = target.transform.position - this.transform.position;
             diff.Normalize();
+            sourceTransform.rigidbody.rotation = Quaternion.LookRotation(-diff);
             sourceTransform.rigidbody.velocity = diff * walkSpeed;
         }
-	}
+    }
 
-	void OnTriggerEnter(Collider other)
-	{
-		var playerController = other.gameObject.GetComponent<PlayerController> ();
-		if (playerController != null && target == null) 
-		{
-			target = playerController;
+    void OnTriggerEnter(Collider other)
+    {
+        var playerController = other.gameObject.GetComponent<PlayerController>();
+        if(playerController != null && target == null)
+        {
+            target = playerController;
             attackAudioSources[Random.Range(0, attackAudioSources.Length)].Play();
-		}
-	}
+        }
+    }
 
-	void OnTriggerExit(Collider other)
-	{
-		var playerController = other.gameObject.GetComponent<PlayerController> ();
-		if (playerController != null && playerController.transform == transform) 
-		{
+    void OnTriggerExit(Collider other)
+    {
+        var playerController = other.gameObject.GetComponent<PlayerController>();
+        if(playerController != null && playerController.transform == transform)
+        {
             sourceTransform.rigidbody.velocity = Vector3.zero;
-			target = null;
-		}
-	}
+            target = null;
+        }
+    }
 
 
 }

@@ -311,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrainSelectIndicator: {fileID: 182350}
   terrainSelectorHeightOffset: .200000003
+  disableNextClick: 0
 --- !u!114 &11435188
 MonoBehaviour:
   m_ObjectHideFlags: 1

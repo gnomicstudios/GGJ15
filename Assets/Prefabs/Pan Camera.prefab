@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsPanning: 0
+  CanPan: 0
   CameraPanSensitvity: .0500000007
 --- !u!124 &12468764
 Behaviour:

@@ -61,11 +61,14 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
                 diff.Normalize();
                 Walk(diff * walkSpeed);
 
-                // If camera is not manually being moved, follow player
-                var cameraController = FindObjectOfType<CameraController>();
-                if(!cameraController.IsPanning)
+                if (SelectionManager.Instance.CurrentSelectable == this)
                 {
-                    cameraController.SetPosition(transform.position.x, transform.position.z + cameraController.DistanceFromPlayerX);
+                    // If camera is not manually being moved, follow player
+                    var cameraController = FindObjectOfType<CameraController>();
+                    if (!cameraController.IsPanning)
+                    {
+                        cameraController.SetPosition(transform.position.x, transform.position.z + cameraController.DistanceFromPlayerX);
+                    }
                 }
             }
         }
