@@ -28,4 +28,12 @@ public static class RandomExtensions
         }
         return value;
     }
+
+    public static Vector3 GetOnUnitCircleXZ()
+    {
+        Vector3 dirn = Random.insideUnitSphere;
+        dirn.y = 0.0f;
+        dirn.Normalize();
+        return dirn;
+    }
 }

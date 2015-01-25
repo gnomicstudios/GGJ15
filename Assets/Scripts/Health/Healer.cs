@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class Healer : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Healer : MonoBehaviour
     public bool healPlayer = true;
     public bool healEnemy = false;
     public int maxHealRate = int.MaxValue;
+    public Action<PlayerController> OnStartedHealingPlayer;
 
     void OnTriggerEnter(Collider col)
     {
@@ -22,6 +24,10 @@ public class Healer : MonoBehaviour
         if(healPlayer && col.gameObject.GetComponent<PlayerController>() != null)
         {
             healing.Add(colHealth);
+            if (OnStartedHealingPlayer != null)
+            {
+                OnStartedHealingPlayer(col.gameObject.GetComponent<PlayerController>());
+            }
         }
         
         if(healEnemy && col.gameObject.GetComponent<EnemyController>() != null)
