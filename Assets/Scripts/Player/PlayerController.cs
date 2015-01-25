@@ -3,16 +3,14 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour, ISelectableEntity
 {
-    private Vector3 target;
-    private bool targetReached = true;
-
     public float walkSpeed = 3.0f;
     public bool facingRight = true;
     public bool isAlive = true;
 
+    private Vector3 target;
+    private bool targetReached = true;
     private Animator anim;                  // Reference to the player's animator component.
     private AudioSource footstepsAudioSource;
-    private AudioSource[] heatBeatAudioSources;
     private bool isAIControlled = false;
 
     public void Kill()
@@ -96,7 +94,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
 
     void StopWalking()
     {
-        footstepsAudioSource.Pause();
+        footstepsAudioSource.Stop();
         target = Vector3.zero;
         transform.rigidbody.velocity = Vector3.zero;
     }
