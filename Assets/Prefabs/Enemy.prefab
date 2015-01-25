@@ -94,6 +94,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 465102}
+  - 135: {fileID: 13503376}
   - 114: {fileID: 11465102}
   m_Layer: 0
   m_Name: AttackZone
@@ -109,7 +110,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 104786}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .0250000004, y: 0, z: 12.0100002}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 404792}
@@ -402,7 +403,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6583f151d6a5648419fac4a7984aa021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 100
+  damageAmount: 1000
+--- !u!135 &13503376
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165102}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &13504786
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -413,8 +426,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .5
-  m_Center: {x: 0, y: .600000024, z: 0}
+  m_Radius: .600000024
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!135 &13504788
 SphereCollider:
   m_ObjectHideFlags: 1
