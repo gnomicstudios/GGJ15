@@ -3,7 +3,8 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour, ISelectableEntity
 {
-    private Transform target;
+    private Vector3 target;
+    private bool targetReached = true;
 
     public float walkSpeed = 3.0f;
     public bool facingRight = true;
@@ -27,22 +28,19 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
         SelectionManager.Instance.CurrentSelectable = this;
         var sounds = GetComponents<AudioSource>();
         footstepsAudioSource = sounds[0];
-        heatBeatAudioSources = new AudioSource[3];
-        //heatBeatAudioSources[0] = sounds[1];
-        //heatBeatAudioSources[1] = sounds[2];
-        //heatBeatAudioSources[2] = sounds[3];
-        //health = GetComponent<Health>();
     }
 	
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(target != null)
+        if (!targetReached)
         {
-            Vector3 diff = target.position - this.transform.position;
-            if(diff.sqrMagnitude < 0.001f)
+            Vector3 diff = target - this.transform.position;
+            if (diff.sqrMagnitude < 0.001f)
             {
-                target.GetComponent<MeshRenderer>().enabled = false;
+                //target.GetComponent<MeshRenderer>().enabled = false;
+                targetReached = true;
+                transform.rigidbody.velocity = Vector3.zero;
             }
             else
             {
@@ -82,7 +80,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
     void StopWalking()
     {
         footstepsAudioSource.Pause();
-        target = null;
+        target = Vector3.zero;
         transform.rigidbody.velocity = Vector3.zero;
     }
 
@@ -117,11 +115,12 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
         Debug.Log("Player DeSelected");
     }
 
-    public void SetTarget(Transform targetTransform)
+    public void SetTarget(Vector3 pos)
     {
-        if(isAlive)
+        if (isAlive)
         {
-            target = targetTransform;
+            target = pos;
+            targetReached = false;
         }
     }
 

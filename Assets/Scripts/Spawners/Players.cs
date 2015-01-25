@@ -11,12 +11,18 @@ public class Players : MonoBehaviour
     void Start()
     {
         //create inital playable character
-        PlayerController p = (PlayerController)Instantiate(prefab,
-                                             new Vector3(0f, 0f, 0f),
-                                             Quaternion.identity);
-        p.gameObject.transform.parent = gameObject.transform;
+        InstantiateNewPlayer (new Vector3 (0f, 0f, -2f));
+        //InstantiateNewPlayer (new Vector3 (4f, 0f, 2f));
+        //InstantiateNewPlayer (new Vector3 (2f, 0f, 4f));
+        //InstantiateNewPlayer (new Vector3 (3f, 0f, 3f));
 
-        activePlayers.Add(p);
+    }
+
+    void InstantiateNewPlayer (Vector3 pos)
+    {
+        PlayerController p = (PlayerController)Instantiate (prefab, pos, Quaternion.identity);
+        p.gameObject.transform.parent = gameObject.transform;
+        activePlayers.Add (p);
     }
 
     public void AddPlayer(PlayerController p)

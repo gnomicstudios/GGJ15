@@ -13,14 +13,16 @@ public class HealthUI : MonoBehaviour
     void FixedUpdate()
     {
         Players players = FindObjectOfType<Players>();
-        if (players.activePlayers.Count > 0)
+        int currentHealth = 0;
+        int maxHealth = 0;
+        foreach (var p in players.activePlayers)
         {
-            Health health = players.activePlayers[0].GetComponentInChildren<Health>();
-            rectTransform.sizeDelta = new Vector2(health.currentHealth * size / health.maxHealth, rectTransform.sizeDelta.y);
+            Health health = p.GetComponentInChildren<Health>();
+            currentHealth += health.currentHealth;
+            maxHealth += health.maxHealth;
         }
-        else
-        {
-            rectTransform.sizeDelta = new Vector2(0.0f, rectTransform.sizeDelta.y);
-        }
+
+        float healthLevel = maxHealth == 0 ? 0.0f : (float)currentHealth / (float)maxHealth;
+        rectTransform.sizeDelta = new Vector2(healthLevel * size, rectTransform.sizeDelta.y);
     }
 }

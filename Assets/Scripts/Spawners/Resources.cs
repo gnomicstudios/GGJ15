@@ -10,6 +10,7 @@ public class Resources : MonoBehaviour
     public int maxDist = 35;
     public Transform[] prefab;
     public int count;
+    public float mapSize = 500.0f;
     private int currentCount;
 
     // Use this for initialization
@@ -31,7 +32,7 @@ public class Resources : MonoBehaviour
 
     void AddResources(Vector3 pos, Vector3 prevPos)
     {
-        if(System.Math.Abs(pos.x) >= 500 || System.Math.Abs(pos.z) >= 500)
+        if(System.Math.Abs(pos.x) >= mapSize * 0.5f || System.Math.Abs(pos.z) >= mapSize * 0.5f)
         {
             return;
         }
