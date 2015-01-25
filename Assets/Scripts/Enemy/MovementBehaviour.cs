@@ -8,6 +8,7 @@ public class MovementBehaviour : MonoBehaviour {
     PlayerController target;
     float walkSpeed = 2.5f;
     RepelState repelState;
+    AudioSource[] attackAudioSources;
 
     public class RepelState
     {
@@ -40,7 +41,9 @@ public class MovementBehaviour : MonoBehaviour {
     }
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
+        attackAudioSources = GetComponents<AudioSource>();
 
 	}
 	
@@ -64,15 +67,8 @@ public class MovementBehaviour : MonoBehaviour {
         if (target != null)
         {
             Vector3 diff = target.transform.position - this.transform.position;
-            if (diff.sqrMagnitude < 0.1f)
-            {
-                sourceTransform.rigidbody.velocity = Vector3.zero;
-            }
-            else
-            {
-                diff.Normalize();
-                sourceTransform.rigidbody.velocity = diff * walkSpeed;
-            }
+            diff.Normalize();
+            sourceTransform.rigidbody.velocity = diff * walkSpeed;
         }
 	}
 
@@ -82,6 +78,7 @@ public class MovementBehaviour : MonoBehaviour {
 		if (playerController != null && target == null) 
 		{
 			target = playerController;
+            attackAudioSources[Random.Range(0, attackAudioSources.Length)].Play();
 		}
 	}
 
@@ -90,6 +87,7 @@ public class MovementBehaviour : MonoBehaviour {
 		var playerController = other.gameObject.GetComponent<PlayerController> ();
 		if (playerController != null && playerController.transform == transform) 
 		{
+            sourceTransform.rigidbody.velocity = Vector3.zero;
 			target = null;
 		}
 	}
