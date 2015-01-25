@@ -3,21 +3,20 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour, ISelectableEntity
 {
-    private Vector3 target;
-    private bool targetReached = true;
-
     public float walkSpeed = 3.0f;
     public bool facingRight = true;
     public bool isAlive = true;
 
+    private Vector3 target;
+    private bool targetReached = true;
     private Animator anim;                  // Reference to the player's animator component.
     private AudioSource footstepsAudioSource;
-    private AudioSource[] heatBeatAudioSources;
     private bool isAIControlled = false;
 
     public void Kill()
     {
         isAlive = false;
+        anim.SetBool("IsAlive", false);
         StopWalking();
         transform.rigidbody.isKinematic = true;
     }
@@ -34,24 +33,28 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!isAlive)
+        if(!isAlive)
+        {
             return;
+        }
 
-        if (!targetReached)
+        if(!targetReached)
         {
             Vector3 diff = target - this.transform.position;
-            if (diff.sqrMagnitude < 0.001f)
+            if(diff.sqrMagnitude < 0.001f)
             {
                 //target.GetComponent<MeshRenderer>().enabled = false;
                 targetReached = true;
-                if (isAIControlled)
+                if(isAIControlled)
                 {
                     var dirn = RandomExtensions.GetOnUnitCircleXZ();
                     SetTarget(this.transform.position + dirn * 10.0f);
                     isAIControlled = true;
                 }
                 else
+                {
                     StopWalking();
+                }
             }
             else
             {
@@ -69,7 +72,8 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
                 }
             }
         }
-
+        
+        anim.SetBool("IsAlive", isAlive);
         anim.SetFloat("VerticalVelocity", transform.rigidbody.velocity.z);
         
         float h = transform.rigidbody.velocity.x;
@@ -85,7 +89,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
     void Walk(Vector3 v)
     {
         transform.rigidbody.velocity = v;
-        if (!footstepsAudioSource.isPlaying)
+        if(!footstepsAudioSource.isPlaying)
         {
             footstepsAudioSource.Play();
         }
@@ -93,7 +97,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
 
     void StopWalking()
     {
-        footstepsAudioSource.Pause();
+        footstepsAudioSource.Stop();
         target = Vector3.zero;
         transform.rigidbody.velocity = Vector3.zero;
     }
@@ -117,7 +121,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
         }
     }
 
-    public void SetIsAIControlled (bool ai)
+    public void SetIsAIControlled(bool ai)
     {
         isAIControlled = ai;
     }
@@ -136,7 +140,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
 
     public void SetTarget(Vector3 pos)
     {
-        if (isAlive)
+        if(isAlive)
         {
             target = pos;
             targetReached = false;
