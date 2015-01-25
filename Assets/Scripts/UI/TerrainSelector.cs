@@ -27,7 +27,7 @@ public class TerrainSelector : MonoBehaviour
 		{
 			terrainSelectIndicator.transform.position = targetPos + terrainSelectorHeightOffset * Vector3.up;
 			terrainSelectIndicator.GetComponent<MeshRenderer>().enabled = true;
-			SelectionManager.Instance.CurrentSelectable.SetTarget(terrainSelectIndicator.transform);
+            SelectionManager.Instance.CurrentSelectable.SetTarget(targetPos);
 		}
 	}
 
