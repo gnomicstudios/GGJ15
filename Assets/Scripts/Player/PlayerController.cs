@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
         target = null;
         rigidbody.velocity = Vector3.zero;
         transform.rigidbody.isKinematic = true;
+
     }
 
     // Use this for initialization
@@ -42,6 +43,14 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
             {
                 diff.Normalize();
                 transform.rigidbody.velocity = diff * walkSpeed;
+
+                // If camera is not manually being moved, follow player
+                var cameraController = FindObjectOfType<CameraController>();
+                if (!cameraController.IsPanning)
+                {
+                    cameraController.SetPosition(transform.position.x, transform.position.z + cameraController.DistanceFromPlayerX);
+                }
+
             }
         }
 
