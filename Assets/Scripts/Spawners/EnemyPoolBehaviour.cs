@@ -87,15 +87,12 @@ public class EnemyPoolBehaviour : MonoBehaviour
 
     EnemyController CreateEnemy(Transform centre)
     {
-        var enemy = (EnemyController)GameObject.Instantiate(enemyTemplate);
-        enemy.transform.parent = gameObject.transform;
-
         var pos = GetInsideUnitSphere(minUnitEnemySpawnRadius) * enemySpawnRadius;
-
         pos += centre.transform.position;
         pos.y = 0;
 
-        enemy.transform.position = pos;
+        var enemy = (EnemyController)Instantiate(enemyTemplate, pos, Quaternion.identity);
+        enemy.transform.parent = gameObject.transform;
 
         return enemy;
     }
