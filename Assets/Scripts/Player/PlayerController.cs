@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
         target = null;
         rigidbody.velocity = Vector3.zero;
         transform.rigidbody.isKinematic = true;
+
     }
 
     // Use this for initialization
