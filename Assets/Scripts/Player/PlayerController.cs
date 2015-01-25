@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
     private Animator anim;                  // Reference to the player's animator component.
     private AudioSource footstepsAudioSource;
     private AudioSource[] heatBeatAudioSources;
+    private bool isAIControlled = false;
 
     public void Kill()
     {
@@ -40,7 +41,14 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
             {
                 //target.GetComponent<MeshRenderer>().enabled = false;
                 targetReached = true;
-                transform.rigidbody.velocity = Vector3.zero;
+                if (isAIControlled)
+                {
+                    var dirn = RandomExtensions.GetOnUnitCircleXZ();
+                    SetTarget(this.transform.position + dirn * 10.0f);
+                    isAIControlled = true;
+                }
+                else
+                    StopWalking();
             }
             else
             {
@@ -103,6 +111,11 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
         }
     }
 
+    public void SetIsAIControlled (bool ai)
+    {
+        isAIControlled = ai;
+    }
+
 	#region ISelectableEntity implementation
 
     public void OnSelect()
@@ -122,6 +135,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
             target = pos;
             targetReached = false;
         }
+        isAIControlled = false;
     }
 
 	#endregion
