@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!isAlive)
+            return;
+
         if (!targetReached)
         {
             Vector3 diff = target - this.transform.position;
