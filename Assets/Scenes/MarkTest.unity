@@ -654,7 +654,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 424320032}
   m_GameObject: {fileID: 449541339}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: adae6f1d6ede89e42adeda0d63e0c1bb, type: 3}
   m_Name: 
@@ -1055,7 +1055,7 @@ MonoBehaviour:
   enemySpawnRadius: 20
   minUnitEnemySpawnRadius: .200000003
   numberOfEnemiesInRadius: 2
-  enemyTemplate: {fileID: 11440952, guid: 155b9dc5a6738094fb640e438451f2d4, type: 2}
+  enemyTemplate: {fileID: 11465242, guid: 1da6529395f691847b3c5e7ba0e1c077, type: 2}
 --- !u!4 &1005840421
 Transform:
   m_ObjectHideFlags: 0
