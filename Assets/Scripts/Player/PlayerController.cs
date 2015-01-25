@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
     // Use this for initialization
     void Start()
     {		
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         SelectionManager.Instance.CurrentSelectable = this;
     }
 	
