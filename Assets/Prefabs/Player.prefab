@@ -110,9 +110,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 499286}
-  - 82: {fileID: 8299282}
-  - 82: {fileID: 8299284}
   - 82: {fileID: 8299286}
+  - 82: {fileID: 8299284}
+  - 82: {fileID: 8299282}
   - 114: {fileID: 11499286}
   m_Layer: 0
   m_Name: Heartbeat
