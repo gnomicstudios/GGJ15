@@ -5,7 +5,7 @@ public interface ISelectableEntity
 {
 	void OnSelect();
 	void OnDeselect();
-	void SetTarget(Transform transform);
+	void SetTarget(Vector3 pos);
 }
 
 public class SelectionManager
