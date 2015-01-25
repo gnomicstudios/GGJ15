@@ -42,6 +42,14 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
             {
                 diff.Normalize();
                 transform.rigidbody.velocity = diff * walkSpeed;
+
+                // If camera is not manually being moved, follow player
+                var cameraController = FindObjectOfType<CameraController>();
+                if (!cameraController.IsPanning)
+                {
+                    cameraController.SetPosition(transform.position.x, transform.position.z + cameraController.DistanceFromPlayerX);
+                }
+
             }
         }
 
