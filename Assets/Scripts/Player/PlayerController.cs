@@ -10,14 +10,14 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
     public bool isAlive = true;
 
     private Animator anim;                  // Reference to the player's animator component.
+    private AudioSource footstepsAudioSource;
+    private AudioSource[] heatBeatAudioSources;
 
     public void Kill()
     {
         isAlive = false;
-        target = null;
-        rigidbody.velocity = Vector3.zero;
+        StopWalking();
         transform.rigidbody.isKinematic = true;
-
     }
 
     // Use this for initialization
@@ -25,6 +25,13 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
     {		
         anim = GetComponentInChildren<Animator>();
         SelectionManager.Instance.CurrentSelectable = this;
+        var sounds = GetComponents<AudioSource>();
+        footstepsAudioSource = sounds[0];
+        heatBeatAudioSources = new AudioSource[3];
+        //heatBeatAudioSources[0] = sounds[1];
+        //heatBeatAudioSources[1] = sounds[2];
+        //heatBeatAudioSources[2] = sounds[3];
+        //health = GetComponent<Health>();
     }
 	
     // Update is called once per frame
@@ -36,13 +43,11 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
             if(diff.sqrMagnitude < 0.001f)
             {
                 target.GetComponent<MeshRenderer>().enabled = false;
-                target = null;
-                transform.rigidbody.velocity = Vector3.zero;
             }
             else
             {
                 diff.Normalize();
-                transform.rigidbody.velocity = diff * walkSpeed;
+                Walk(diff * walkSpeed);
 
                 // If camera is not manually being moved, follow player
                 var cameraController = FindObjectOfType<CameraController>();
@@ -50,7 +55,6 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
                 {
                     cameraController.SetPosition(transform.position.x, transform.position.z + cameraController.DistanceFromPlayerX);
                 }
-
             }
         }
 
@@ -64,6 +68,22 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
         {
             Flip();
         }
+    }
+
+    void Walk(Vector3 v)
+    {
+        transform.rigidbody.velocity = v;
+        if (!footstepsAudioSource.isPlaying)
+        {
+            footstepsAudioSource.Play();
+        }
+    }
+
+    void StopWalking()
+    {
+        footstepsAudioSource.Pause();
+        target = null;
+        transform.rigidbody.velocity = Vector3.zero;
     }
 
     void Flip()
