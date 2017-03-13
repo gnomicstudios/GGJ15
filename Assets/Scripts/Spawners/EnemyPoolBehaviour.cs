@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class EnemyPoolBehaviour : MonoBehaviour
 {
-
     public float enemySpawnRadius = 10.0f;
     public float minUnitEnemySpawnRadius = 0.2f;
     public int numberOfEnemiesInRadius;
