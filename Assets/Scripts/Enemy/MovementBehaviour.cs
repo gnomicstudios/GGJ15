@@ -56,11 +56,11 @@ public class MovementBehaviour : MonoBehaviour
             repelState.Update(Time.deltaTime);
             if(repelState.isActive)
             {
-                sourceTransform.rigidbody.velocity = repelState.repelDirection * walkSpeed;
+                sourceTransform.GetComponent<Rigidbody>().velocity = repelState.repelDirection * walkSpeed;
             }
             else
             {
-                sourceTransform.rigidbody.velocity = Vector3.zero;
+                sourceTransform.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 repelState = null;
             }
             return;
@@ -70,8 +70,8 @@ public class MovementBehaviour : MonoBehaviour
         {
             Vector3 diff = target.transform.position - this.transform.position;
             diff.Normalize();
-            sourceTransform.rigidbody.rotation = Quaternion.LookRotation(-diff);
-            sourceTransform.rigidbody.velocity = diff * walkSpeed;
+            sourceTransform.GetComponent<Rigidbody>().rotation = Quaternion.LookRotation(-diff);
+            sourceTransform.GetComponent<Rigidbody>().velocity = diff * walkSpeed;
         }
     }
 
@@ -90,7 +90,7 @@ public class MovementBehaviour : MonoBehaviour
         var playerController = other.gameObject.GetComponent<PlayerController>();
         if(playerController != null && playerController.transform == transform)
         {
-            sourceTransform.rigidbody.velocity = Vector3.zero;
+            sourceTransform.GetComponent<Rigidbody>().velocity = Vector3.zero;
             target = null;
         }
     }

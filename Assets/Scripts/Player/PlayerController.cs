@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class PlayerController : MonoBehaviour, ISelectableEntity
 {
@@ -18,7 +19,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
         isAlive = false;
         anim.SetBool("IsAlive", false);
         StopWalking();
-        transform.rigidbody.isKinematic = true;
+        transform.GetComponent<Rigidbody>().isKinematic = true;
     }
 
     // Use this for initialization
@@ -28,6 +29,8 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
         SelectionManager.Instance.CurrentSelectable = this;
         var sounds = GetComponents<AudioSource>();
         footstepsAudioSource = sounds[0];
+
+        SnapCameraToPlayer();
     }
 	
     // Update is called once per frame
@@ -63,20 +66,15 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
 
                 if (SelectionManager.Instance.CurrentSelectable == this)
                 {
-                    // If camera is not manually being moved, follow player
-                    var cameraController = FindObjectOfType<CameraController>();
-                    if (!cameraController.IsPanning)
-                    {
-                        cameraController.SetPosition(transform.position.x, transform.position.z + cameraController.DistanceFromPlayerX);
-                    }
+                    SnapCameraToPlayer();
                 }
             }
         }
         
         anim.SetBool("IsAlive", isAlive);
-        anim.SetFloat("VerticalVelocity", transform.rigidbody.velocity.z);
+        anim.SetFloat("VerticalVelocity", transform.GetComponent<Rigidbody>().velocity.z);
         
-        float h = transform.rigidbody.velocity.x;
+        float h = transform.GetComponent<Rigidbody>().velocity.x;
         anim.SetFloat("HorizontalVelocity", System.Math.Abs(h));
         // If the input is moving the player doesn't match direction facing
         if((Mathf.Abs(h) > 0.05 && (h < 0) == facingRight)
@@ -86,9 +84,19 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
         }
     }
 
+    private void SnapCameraToPlayer()
+    {
+        // If camera is not manually being moved, follow player
+        var cameraController = FindObjectOfType<CameraController>();
+        if (!cameraController.IsPanning)
+        {
+            cameraController.SetPosition(transform.position.x, transform.position.z + cameraController.DistanceFromPlayerX);
+        }
+    }
+
     void Walk(Vector3 v)
     {
-        transform.rigidbody.velocity = v;
+        transform.GetComponent<Rigidbody>().velocity = v;
         if(!footstepsAudioSource.isPlaying)
         {
             footstepsAudioSource.Play();
@@ -99,7 +107,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
     {
         footstepsAudioSource.Stop();
         target = Vector3.zero;
-        transform.rigidbody.velocity = Vector3.zero;
+        transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 
     void Flip()

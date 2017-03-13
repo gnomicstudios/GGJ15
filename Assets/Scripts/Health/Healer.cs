@@ -46,8 +46,8 @@ public class Healer : MonoBehaviour
     {
         foreach(Health h in healing)
         {
-            int changeAmount = System.Math.Min(health.currentHealth, h.maxHealth - h.currentHealth);
-            changeAmount = System.Math.Min(changeAmount, maxHealRate);
+            float changeAmount = Mathf.Min(health.currentHealth, h.maxHealth - h.currentHealth);
+            changeAmount = Mathf.Min(changeAmount, maxHealRate);
 
             h.currentHealth += changeAmount;
             health.currentHealth -= changeAmount;

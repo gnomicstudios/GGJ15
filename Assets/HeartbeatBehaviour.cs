@@ -22,9 +22,7 @@ public class HeartbeatBehaviour : MonoBehaviour {
 	void Update () 
     {
         var ratio = health.currentHealth / (float)health.maxHealth;
-        var i = (int)(ratio * heartBeatAudioSources.Length);
-        if (i == heartBeatAudioSources.Length)
-            i--;
+        var i = Mathf.Clamp((int)(ratio * heartBeatAudioSources.Length), 0, heartBeatAudioSources.Length - 1);
 
         if (currentAudioSource != heartBeatAudioSources[i])
         {

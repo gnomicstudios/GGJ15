@@ -13,8 +13,8 @@ public class HealthUI : MonoBehaviour
     void FixedUpdate()
     {
         Players players = FindObjectOfType<Players>();
-        int currentHealth = 0;
-        int maxHealth = 0;
+        float currentHealth = 1.0f;
+        float maxHealth = 1.0f;
         foreach (var p in players.activePlayers)
         {
             Health health = p.GetComponentInChildren<Health>();

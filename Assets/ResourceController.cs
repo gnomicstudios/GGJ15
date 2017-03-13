@@ -41,7 +41,7 @@ public class ResourceController : MonoBehaviour
         {
             flame.gameObject.SetActive(false);
             healer.enabled = false;
-            safeZone.renderer.enabled = false;
+            safeZone.GetComponent<Renderer>().enabled = false;
             this.enabled = false;
         }
 

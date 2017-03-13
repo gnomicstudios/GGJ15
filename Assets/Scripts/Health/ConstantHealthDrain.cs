@@ -3,10 +3,10 @@
 public class ConstantHealthDrain : MonoBehaviour
 {
     public Health health;
-    public int HealthDropRate = 1;
+    public float HealthDropRate = 10f;
 
     void FixedUpdate()
     {
-        health.currentHealth -= System.Math.Min(health.currentHealth, HealthDropRate);
+        health.currentHealth -= Mathf.Min(health.currentHealth, HealthDropRate * Time.fixedDeltaTime);
     }
 }

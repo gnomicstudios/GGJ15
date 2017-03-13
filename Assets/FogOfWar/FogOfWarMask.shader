@@ -1,45 +1,66 @@
-﻿Shader "Custom/FogOfWarMask" {
-	Properties {
-		_Color("Main Color", Color) = (1,1,1,1)
-		_MainTex ("Base (RGB)", 2D) = "white" {}
-		_BlurPower("BlurPower", float) = 0.002
+﻿Shader "Unlit/SimpleUnlitTexturedShader"
+{
+	Properties
+	{
+		// we have removed support for texture tiling/offset,
+		// so make them not be displayed in material inspector
+		[NoScaleOffset] _MainTex("Texture", 2D) = "white" {}
 	}
-	SubShader {
-		Tags { "Queue"="Transparent+100" "RenderType"="Transparent" "LightMode"="ForwardBase" }
-		Blend SrcAlpha OneMinusSrcAlpha
-		Lighting Off
-		LOD 200
-		
-		CGPROGRAM
-		#pragma surface surf NoLighting noambient
-		
-		fixed4 LightingNoLighting(SurfaceOutput s, fixed3 lightDir, float aten)
+
+	SubShader
+	{
+		Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" "IgnoreProjector" = "True" }
+
+		Pass
 		{
-			fixed4 color;
-			color.rgb = s.Albedo;
-			color.a = s.Alpha;
-			return color;
+			// inside Pass
+			ZWrite Off
+			Blend SrcAlpha OneMinusSrcAlpha
+
+			CGPROGRAM
+			// use "vert" function as the vertex shader
+			#pragma vertex vert
+			// use "frag" function as the pixel (fragment) shader
+			#pragma fragment frag
+
+			// vertex shader inputs
+			struct appdata
+			{
+				float4 vertex : POSITION; // vertex position
+				float2 uv : TEXCOORD0; // texture coordinate
+			};
+
+			// vertex shader outputs ("vertex to fragment")
+			struct v2f
+			{
+				float2 uv : TEXCOORD0; // texture coordinate
+				float4 vertex : SV_POSITION; // clip space position
+			};
+
+			// vertex shader
+			v2f vert(appdata v)
+			{
+				v2f o;
+				// transform position to clip space
+				// (multiply with model*view*projection matrix)
+				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				// just pass the texture coordinate
+				o.uv = v.uv;
+				return o;
+			}
+
+			// texture we will sample
+			sampler2D _MainTex;
+
+			// pixel shader; returns low precision ("fixed4" type)
+			// color ("SV_Target" semantic)
+			fixed4 frag(v2f i) : SV_Target
+			{
+				// sample texture and return it
+				fixed4 col = tex2D(_MainTex, i.uv);
+				return float4(0,0,0, 1 - col.g);
+			}
+			ENDCG
 		}
-
-		fixed4 _Color;
-		sampler2D _MainTex;
-		float _BlurPower;
-
-		struct Input {
-			float2 uv_MainTex;
-		};
-
-		void surf (Input IN, inout SurfaceOutput o) {
-			half4 baseColor1 = tex2D (_MainTex, IN.uv_MainTex + float2(-_BlurPower, 0));
-			half4 baseColor2 = tex2D (_MainTex, IN.uv_MainTex + float2(0, -_BlurPower));
-			half4 baseColor3 = tex2D (_MainTex, IN.uv_MainTex + float2(_BlurPower, 0));
-			half4 baseColor4 = tex2D (_MainTex, IN.uv_MainTex + float2(0, _BlurPower));
-			half4 baseColor = 0.25 * (baseColor1 + baseColor2 + baseColor3 + baseColor4);
-			
-			o.Albedo = _Color.rgb * baseColor.b;
-			o.Alpha = _Color.a - baseColor.g; //green - color of aperture mask
-		}
-		ENDCG
-	} 
-	Fallback "Diffuse"
+	}
 }
