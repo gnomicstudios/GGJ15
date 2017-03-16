@@ -12,20 +12,40 @@ public class CameraController : MonoBehaviour {
     bool lastIsMouseButtonDown;
     Vector3 lastMouseButtonDownPos;
 
-    public float DistanceFromPlayerX;
+    float height = 0;
+    float lastRotX;
 
-    public void SetPosition(float x, float z)
+    public void SetTargetPosition(float x, float z)
     {
-        var pos = GetComponent<Camera>().transform.position;
-        GetComponent<Camera>().transform.position = new Vector3(x, pos.y, z);
+        float distFromPlayer = height * Mathf.Tan(Mathf.Deg2Rad * (90.0f - transform.localEulerAngles.x));
+        var pos = transform.position;
+        transform.position = new Vector3(x, pos.y, z - distFromPlayer);
     }
 
 	void Awake () {
-        DistanceFromPlayerX = transform.position.z;
-	}
+        height = transform.position.y;
+    }
 
 	void FixedUpdate ()
 	{
+        if (lastRotX != transform.eulerAngles.x)
+        {
+            var player = FindObjectOfType<PlayerController>();
+            if (player != null)
+            {
+                SetTargetPosition(player.transform.position.x, player.transform.position.z);
+            }
+
+            lastRotX = transform.eulerAngles.x;
+            var tilters = FindObjectsOfType<Tilt>();
+            foreach (var tilt in tilters)
+            {
+                Vector3 rot = tilt.transform.eulerAngles;
+                rot.x = lastRotX;
+                tilt.transform.eulerAngles = rot;
+            }
+        }
+
         if (!CanPan)
             return;
 
@@ -54,7 +74,7 @@ public class CameraController : MonoBehaviour {
 
         var delta = (to - from) * CameraPanSensitvity * -1.0f;
         var pos = GetComponent<Camera>().transform.position;
-        SetPosition(pos.x + delta.x, pos.z + delta.y);
+        SetTargetPosition(pos.x + delta.x, pos.z + delta.y);
     }
 
 }

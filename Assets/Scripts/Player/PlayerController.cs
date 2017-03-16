@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour, ISelectableEntity
         var cameraController = FindObjectOfType<CameraController>();
         if (!cameraController.IsPanning)
         {
-            cameraController.SetPosition(transform.position.x, transform.position.z + cameraController.DistanceFromPlayerX);
+            cameraController.SetTargetPosition(transform.position.x, transform.position.z);
         }
     }
 
